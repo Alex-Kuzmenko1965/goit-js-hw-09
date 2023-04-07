@@ -2,7 +2,7 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
 const refs = {
-  // input: inputEl = document.querySelector('input[type="text"]'),
+  input: inputEl = document.querySelector('input[type="text"]'),
   start: startBtn = document.querySelector('button'),
   days: days = document.querySelector('span[data-days]'),
   hours: hours = document.querySelector('span[data-hours]'),
