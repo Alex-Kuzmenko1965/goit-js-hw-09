@@ -1,12 +1,79 @@
-// Описаний в документації
 import flatpickr from "flatpickr";
-// Додатковий імпорт стилів
 import "flatpickr/dist/flatpickr.min.css";
 
 const refs = {
   input: inputEl = document.getElementById('datetime-picker'),
   start: startBtn = document.querySelector('button'),
+  days: days = document.querySelector('span[data-days]'),
+  hours: hours = document.querySelector('span[data-hours]'),
+  minutes: minutes = document.querySelector('span[data-minutes]'),
+  seconds: seconds = document.querySelector('span[data-seconds]'),
 };
 
-console.log(inputEl);
-console.log(startBtn);
+let countDownDate;
+
+const options = {
+  enableTime: true,
+  time_24hr: true,
+  defaultDate: new Date(),
+  minuteIncrement: 1,
+  onClose(selectedDates) {    
+    countDownDate = selectedDates[0];
+    console.log(countDownDate);         
+  },
+};
+
+flatpickr(refs.input, options);
+
+let currentDate = options.defaultDate;
+console.log('defaultDate:', currentDate);
+
+refs.start.addEventListener("click", handleButtonClick);
+
+function addZero(number) {
+  return String(number).padStart(2, 0); 
+};
+
+function convertMs(ms) {
+  const second = 1000;
+  const minute = second * 60;
+  const hour = minute * 60;
+  const day = hour * 24;
+
+  const days = addZero(Math.floor(ms / day));
+  const hours = addZero(Math.floor((ms % day) / hour));
+  const minutes = addZero(Math.floor(((ms % day) % hour) / minute));
+  const seconds = addZero(Math.floor((((ms % day) % hour) % minute) / second));
+
+  return { days, hours, minutes, seconds };
+}
+// console.dir(convertMs());
+
+function countDownTime() {
+  const now = new Date();
+  const diff = countDownDate - now;
+  // console.log('diff', diff);  
+  convertMs(diff);
+  // console.log(convertMs(diff).days);
+  // console.log(convertMs(diff).hours);
+  // console.log(convertMs(diff).minutes);
+  // console.log(convertMs(diff).seconds);
+  refs.days.textContent = addZero(convertMs(diff).days);  
+  refs.hours.textContent = addZero(convertMs(diff).hours); 
+  refs.minutes.textContent = addZero(convertMs(diff).minutes);
+  refs.seconds.textContent = addZero(convertMs(diff).seconds);
+};
+
+function handleButtonClick(event) {
+  event.preventDefault();
+  flatpickr(refs.input, options);
+  console.log(countDownDate);
+  const diff = countDownDate - currentDate;
+  console.log('diff+:', diff);
+  if (diff < 0) {
+    window.alert("Please choose a date in the future");
+    return;
+    } else {
+  setInterval(countDownTime, 1000);  
+  };
+};
