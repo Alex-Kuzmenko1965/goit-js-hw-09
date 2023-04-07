@@ -2,7 +2,7 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
 const refs = {
-  input: inputEl = document.getElementById('datetime-picker'),
+  input: inputEl = document.querySelector('input[type="text"]'),
   start: startBtn = document.querySelector('button'),
   days: days = document.querySelector('span[data-days]'),
   hours: hours = document.querySelector('span[data-hours]'),
@@ -13,6 +13,7 @@ const refs = {
 let countDownDate;
 
 const options = {
+  altFormat: "Y-m-d H:i",
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
@@ -20,7 +21,7 @@ const options = {
   onClose(selectedDates) {    
     countDownDate = selectedDates[0];
     console.log(countDownDate);         
-  },
+  },  
 };
 
 flatpickr(refs.input, options);
@@ -65,10 +66,13 @@ function countDownTime() {
 };
 
 function handleButtonClick(event) {
-  event.preventDefault();
+  event.preventDefault(); 
   flatpickr(refs.input, options);
+  console.dir(refs.input);  
+  console.log(refs.input.value);
   console.log(countDownDate);
-  const diff = countDownDate - currentDate;
+  refs.input.value = countDownDate;
+  const diff = countDownDate - currentDate;  
   console.log('diff+:', diff);
   if (diff < 0) {
     window.alert("Please choose a date in the future");
