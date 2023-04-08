@@ -3,7 +3,7 @@ import "flatpickr/dist/flatpickr.min.css";
 
 const refs = {
   input: inputEl = document.querySelector('input[type="text"]'),
-  start: startBtn = document.querySelector('button'),
+  btn: startBtn = document.querySelector('button'),
   days: days = document.querySelector('span[data-days]'),
   hours: hours = document.querySelector('span[data-hours]'),
   minutes: minutes = document.querySelector('span[data-minutes]'),
@@ -13,7 +13,6 @@ const refs = {
 let countDownDate;
 
 const options = {
-  altFormat: "Y-m-d H:i",
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
@@ -23,34 +22,14 @@ const options = {
     console.log(countDownDate);         
   },  
 };
-
-const BUTTON_UI = {
-  activeBtn: "stop",
-  start: {    
-    class: "start",
-  },
-  stop: {    
-    class: "stop",
-  },
-};
+console.log(countDownDate);
 
 flatpickr(refs.input, options);
 
 let currentDate = options.defaultDate;
 console.log('defaultDate:', currentDate);
-console.log('altFormat:', options.altFormat);
 
-refs.input.addEventListener("blur", (event) => {
-  event.preventDefault();
-  console.log('blur');
-  console.log(refs.input.value);
-});
-
-refs.start.addEventListener("click", handleButtonClick);
-
-function addZero(number) {
-  return String(number).padStart(2, 0); 
-};
+refs.btn.addEventListener("click", handleButtonClick);
 
 function convertMs(ms) {
   const second = 1000;
@@ -65,7 +44,10 @@ function convertMs(ms) {
 
   return { days, hours, minutes, seconds };
 }
-// console.dir(convertMs());
+
+function addZero(number) {
+  return String(number).padStart(2, 0); 
+};
 
 function countDownTime() {
   const now = new Date();
@@ -78,22 +60,22 @@ function countDownTime() {
   refs.seconds.textContent = addZero(convertMs(diff).seconds);
 };
 
-function handleButtonClick(event) {
-  event.preventDefault(); 
+function handleButtonClick(event) {  
+  // event.preventDefault(); 
   flatpickr(refs.input, options);
   console.dir(refs.input);  
   console.log(refs.input.value);
-  console.log(countDownDate);
-  // BUTTON_UI.activeBtn = stopClass;       
-  //   refs.btn.classList.remove(startClass);
-  //   refs.btn.classList.add(stopClass);
-  // refs.input.value = countDownDate;
-  const diff = countDownDate - currentDate;  
-  console.log('diff+:', diff);
-  if (diff < 0) {
-    window.alert("Please choose a date in the future");
-    return;
-    } else {
-  setInterval(countDownTime, 1000);  
+  if (countDownDate) {
+    console.log(countDownDate);  
+    const diff = countDownDate - currentDate;  
+    console.log('diff+:', diff);
+    if (diff < 0) {
+      window.alert("Please choose a date in the future");
+      return;
+      } else {    
+    setInterval(countDownTime, 1000);
+    // refs.btn.classList.add('stop');    
+    // refs.input.value = countDownDate; 
+    };
   };
 };
