@@ -2,12 +2,12 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
 const refs = {
-  input: inputEl = document.getElementById('datetime-picker'),
-  btn: startBtn = document.querySelector('button'),
-  days: days = document.querySelector('span[data-days]'),
-  hours: hours = document.querySelector('span[data-hours]'),
-  minutes: minutes = document.querySelector('span[data-minutes]'),
-  seconds: seconds = document.querySelector('span[data-seconds]'),
+  input: document.getElementById('datetime-picker'),
+  btn: document.querySelector('button'),
+  days: document.querySelector('span[data-days]'),
+  hours: document.querySelector('span[data-hours]'),
+  minutes: document.querySelector('span[data-minutes]'),
+  seconds: document.querySelector('span[data-seconds]'),
 };
 
 let countDownDate;
@@ -23,8 +23,8 @@ const options = {
   },  
 };
 
-// flatpickr(refs.input, options);
-// console.log(flatpickr(refs.input, options));
+flatpickr(refs.input, options);
+console.log(flatpickr(refs.input, options));
 
 let currentDate = options.defaultDate;
 console.dir('defaultDate:', currentDate);
