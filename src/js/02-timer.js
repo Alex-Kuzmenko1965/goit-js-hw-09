@@ -2,7 +2,7 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
 const refs = {
-  input: inputEl = document.querySelector('input[type="text"]'),
+  input: inputEl = document.getElementById('datetime-picker'),
   btn: startBtn = document.querySelector('button'),
   days: days = document.querySelector('span[data-days]'),
   hours: hours = document.querySelector('span[data-hours]'),
@@ -22,12 +22,12 @@ const options = {
     console.log(countDownDate);         
   },  
 };
-console.log(countDownDate);
 
 flatpickr(refs.input, options);
+console.log(flatpickr(refs.input, options));
 
 let currentDate = options.defaultDate;
-console.log('defaultDate:', currentDate);
+console.dir('defaultDate:', currentDate);
 
 refs.btn.addEventListener("click", handleButtonClick);
 
