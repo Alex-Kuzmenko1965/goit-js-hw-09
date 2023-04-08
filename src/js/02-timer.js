@@ -23,8 +23,8 @@ const options = {
   },  
 };
 
-flatpickr(refs.input, options);
-console.log(flatpickr(refs.input, options));
+// flatpickr(refs.input, options);
+// console.log(flatpickr(refs.input, options));
 
 let currentDate = options.defaultDate;
 console.dir('defaultDate:', currentDate);
