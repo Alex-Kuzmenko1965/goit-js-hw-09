@@ -2,7 +2,7 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
 const refs = {
-  // input: inputEl = document.querySelector('input[type="text"]'),
+  input: inputEl = document.querySelector('input[type="text"]'),
   start: startBtn = document.querySelector('button'),
   days: days = document.querySelector('span[data-days]'),
   hours: hours = document.querySelector('span[data-hours]'),
@@ -24,10 +24,27 @@ const options = {
   },  
 };
 
+const BUTTON_UI = {
+  activeBtn: "stop",
+  start: {    
+    class: "start",
+  },
+  stop: {    
+    class: "stop",
+  },
+};
+
 flatpickr(refs.input, options);
 
 let currentDate = options.defaultDate;
 console.log('defaultDate:', currentDate);
+console.log('altFormat:', options.altFormat);
+
+refs.input.addEventListener("blur", (event) => {
+  event.preventDefault();
+  console.log('blur');
+  console.log(refs.input.value);
+});
 
 refs.start.addEventListener("click", handleButtonClick);
 
@@ -54,11 +71,7 @@ function countDownTime() {
   const now = new Date();
   const diff = countDownDate - now;
   // console.log('diff', diff);  
-  convertMs(diff);
-  // console.log(convertMs(diff).days);
-  // console.log(convertMs(diff).hours);
-  // console.log(convertMs(diff).minutes);
-  // console.log(convertMs(diff).seconds);
+  convertMs(diff);  
   refs.days.textContent = addZero(convertMs(diff).days);  
   refs.hours.textContent = addZero(convertMs(diff).hours); 
   refs.minutes.textContent = addZero(convertMs(diff).minutes);
@@ -71,7 +84,10 @@ function handleButtonClick(event) {
   console.dir(refs.input);  
   console.log(refs.input.value);
   console.log(countDownDate);
-  refs.input.value = countDownDate;
+  // BUTTON_UI.activeBtn = stopClass;       
+  //   refs.btn.classList.remove(startClass);
+  //   refs.btn.classList.add(stopClass);
+  // refs.input.value = countDownDate;
   const diff = countDownDate - currentDate;  
   console.log('diff+:', diff);
   if (diff < 0) {
