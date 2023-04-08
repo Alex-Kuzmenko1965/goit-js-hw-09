@@ -13,6 +13,7 @@ const refs = {
 let countDownDate;
 
 const options = {
+  dateFormat: "Y-m-d H:i",
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
@@ -20,11 +21,11 @@ const options = {
   onClose(selectedDates) {    
     countDownDate = selectedDates[0];
     console.log(countDownDate);         
-  },  
+  },   
 };
 
 flatpickr(refs.input, options);
-console.log(flatpickr(refs.input, options));
+console.log(flatpickr.parseDate(countDownDate, options.dateFormat));
 
 let currentDate = options.defaultDate;
 console.dir('defaultDate:', currentDate);
@@ -61,20 +62,19 @@ function countDownTime() {
 };
 
 function handleButtonClick(event) {  
-  // event.preventDefault(); 
-  flatpickr(refs.input, options);
-  console.dir(refs.input);  
-  console.log(refs.input.value);
-  if (countDownDate) {    
-    console.log(countDownDate);  
+  flatpickr(refs.input, options);    
+  if (countDownDate) {        
     const diff = countDownDate - currentDate;  
     console.log('diff+:', diff);
     if (diff < 0) {
       window.alert("Please choose a date in the future");
       return;
-      } else {    
-    setInterval(countDownTime, 1000);
-    refs.btn.disabled = true;
+      } else { 
+        refs.input.value = flatpickr.formatDate(countDownDate, "Y-m-d H:i");     
+        console.log(refs.input.value);
+      setInterval(countDownTime, 1000);
+      refs.btn.disabled = true;
+      // console.log('+', countDownDate);
     };
   };
 };
