@@ -65,7 +65,7 @@ function handleButtonClick(event) {
   flatpickr(refs.input, options);
   console.dir(refs.input);  
   console.log(refs.input.value);
-  if (countDownDate) {
+  if (countDownDate) {    
     console.log(countDownDate);  
     const diff = countDownDate - currentDate;  
     console.log('diff+:', diff);
@@ -74,8 +74,7 @@ function handleButtonClick(event) {
       return;
       } else {    
     setInterval(countDownTime, 1000);
-    // refs.btn.classList.add('stop');    
-    // refs.input.value = countDownDate; 
+    refs.btn.disabled = true;
     };
   };
 };
