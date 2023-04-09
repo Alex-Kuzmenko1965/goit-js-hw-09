@@ -9,7 +9,19 @@ const refs = {
   hours: document.querySelector('span[data-hours]'),
   minutes: document.querySelector('span[data-minutes]'),
   seconds: document.querySelector('span[data-seconds]'),
+  timer: document.querySelector('.timer'),
 };
+
+let days = '00';
+let hours = '00';
+let minutes = '00';
+let seconds = '00';
+
+const markup = `<div class="timer"><p>${days} : ${hours} : ${minutes} : ${seconds}</p></div>`;
+console.log(markup);
+refs.timer.innerHTML = markup;
+  
+console.log(refs.timer);
 
 let countDownDate;
 
@@ -43,6 +55,10 @@ function convertMs(ms) {
   const hours = addZero(Math.floor((ms % day) / hour));
   const minutes = addZero(Math.floor(((ms % day) % hour) / minute));
   const seconds = addZero(Math.floor((((ms % day) % hour) % minute) / second));
+
+  const markup = `<div class="timer"><p>${days} : ${hours} : ${minutes} : ${seconds}</p></div>`;
+  // console.log(markup);
+  refs.timer.innerHTML = markup;
 
   return { days, hours, minutes, seconds };
 }
