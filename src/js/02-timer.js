@@ -1,6 +1,6 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
-import Notiflix from 'notiflix';
+// import Notiflix from 'notiflix';
 
 const refs = {
   input: document.getElementById('datetime-picker'),
@@ -81,11 +81,15 @@ function countDownTime() {
 function handleButtonClick(event) {  
   flatpickr(refs.input, options);    
   if (!countDownDate)
-  {Notiflix.Notify.warning("Please choose a date in the future");} else {        
+  {
+    // Notiflix.Notify.warning("Please choose a date in the future");
+    alert("Please choose a date in the future");
+  } else {        
     const diff = countDownDate - currentDate;  
     console.log('diff+:', diff);
     if (diff < 0) {
-      Notiflix.Notify.warning("Please choose a date in the future");
+      // Notiflix.Notify.warning("Please choose a date in the future");
+      alert("Please choose a date in the future");
       return;
       } else { 
         refs.input.value = flatpickr.formatDate(countDownDate, "Y-m-d H:i");     
