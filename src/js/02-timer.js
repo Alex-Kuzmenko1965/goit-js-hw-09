@@ -4,11 +4,7 @@ import Notiflix from 'notiflix';
 
 const refs = {
   input: document.getElementById('datetime-picker'),
-  btn: document.querySelector('button'),
-  days: document.querySelector('span[data-days]'),
-  hours: document.querySelector('span[data-hours]'),
-  minutes: document.querySelector('span[data-minutes]'),
-  seconds: document.querySelector('span[data-seconds]'),
+  btn: document.querySelector('button'),  
   timer: document.querySelector('.timer'),
 };
 
@@ -39,9 +35,14 @@ const options = {
 
 flatpickr(refs.input, options);
 console.log(flatpickr.parseDate(countDownDate, options.dateFormat));
+refs.btn.disabled = true;
 
 let currentDate = options.defaultDate;
 console.dir('defaultDate:', currentDate);
+
+refs.input.addEventListener("click", handleInputClick);
+
+function handleInputClick() {refs.btn.disabled = false;};
 
 refs.btn.addEventListener("click", handleButtonClick);
 
@@ -71,26 +72,16 @@ function countDownTime() {
   const now = new Date();
   const diff = countDownDate - now;
   // console.log('diff', diff);  
-  convertMs(diff);  
-  refs.days.textContent = addZero(convertMs(diff).days);  
-  refs.hours.textContent = addZero(convertMs(diff).hours); 
-  refs.minutes.textContent = addZero(convertMs(diff).minutes);
-  refs.seconds.textContent = addZero(convertMs(diff).seconds);
+  convertMs(diff);
 };
 
 function handleButtonClick(event) {  
   flatpickr(refs.input, options);    
-  if (!countDownDate)
-  {
-    Notiflix.Notify.warning("Please choose a date in the future");
-    // alert("Please choose a date in the future");
-  } else {        
+  if (countDownDate) {        
     const diff = countDownDate - currentDate;  
-    console.log('diff+:', diff);
-    if (diff < 0) {
-      Notiflix.Notify.warning("Please choose a date in the future");
-      // alert("Please choose a date in the future");
-      // return;
+    console.log('diff+:', diff);    
+    if (diff <= 0) {
+      Notiflix.Notify.warning("Please choose a date in the future");      
       } else { 
         refs.input.value = flatpickr.formatDate(countDownDate, "Y-m-d H:i");     
         console.log(refs.input.value);

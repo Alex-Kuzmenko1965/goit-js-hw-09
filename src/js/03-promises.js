@@ -31,16 +31,15 @@ function onFormSubmit(event) {
   amount = event.currentTarget.elements.amount.value;
   // console.log(amount);
   for (let i = 1; i <= amount; i += 1) {
-    const position = i;    
-    delay = Number(delay) + Number(step);     
+    const position = i;
+    if (i != 1)    
+    {delay = Number(delay) + Number(step);}     
     createPromise(position, delay)
       .then(({ position, delay }) => {
-        Notiflix.Notify.success(` Fulfilled promise ${position} in ${delay}ms`);
-        // console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+        Notiflix.Notify.success(` Fulfilled promise ${position} in ${delay}ms`);        
       })
       .catch(({ position, delay }) => {
-        Notiflix.Notify.failure(` Rejected promise ${position} in ${delay}ms`);
-        // console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+        Notiflix.Notify.failure(` Rejected promise ${position} in ${delay}ms`);        
       });
   };
 };
